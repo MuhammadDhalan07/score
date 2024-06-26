@@ -22,6 +22,7 @@ return new class extends Migration
         Schema::create('details_value', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('category_id')->nullable();
+            $table->foreignUlid('value_id')->index()->references('id')->on('value');
             $table->double('value_1')->nullable();
             $table->double('total')->nullable();
             $table->softDeletes();

@@ -5,6 +5,8 @@ namespace App\Filament\Resources\Grade;
 use App\Filament\Resources\Grade\ValueResource\Pages;
 use App\Filament\Resources\Grade\ValueResource\RelationManagers;
 use App\Models\Grade\DetailValue;
+use Awcodes\TableRepeater\Components\TableRepeater;
+use Awcodes\TableRepeater\Header;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -44,28 +46,29 @@ class ValueResource extends Resource
                     ->native(false)
                     ->columnSpanFull()
                     ->relationship('person', 'name'),
-                Forms\Components\Select::make('category_id')
-                    ->label('Category')
-                    ->required()
-                    ->native(false)
-                    ->hidden(fn ($get) => $get('person_id') == null)
-                    ->relationship('category', 'name'),
-                Forms\Components\TextInput::make('value_1')
-                    ->label('Value 1')
-                    ->required()
-                    ->hidden(fn ($get) => $get('person_id') == null),
-                Forms\Components\TextInput::make('value_2')
-                    ->label('Value 2')
-                    ->required()
-                    ->hidden(fn ($get) => $get('person_id') == null),
-                Forms\Components\TextInput::make('value_3')
-                    ->label('Value 3')
-                    ->required()
-                    ->hidden(fn ($get) => $get('person_id') == null),
-                Forms\Components\TextInput::make('value_4')
-                    ->label('Value 4')
-                    ->required()
-                    ->hidden(fn ($get) => $get('person_id') == null),
+                TableRepeater::make('detailsValue')
+                    ->relationship()
+                    ->addActionLabel('Add Value')
+                    ->headers([
+                        Header::make('category_id')
+                            ->label('Category')
+                            ->markAsRequired(),
+                        Header::make('value')
+                            ->label('Value')
+                            ->markAsRequired(),
+                    ])
+                    ->schema([
+                        Forms\Components\Select::make('category_id')
+                            ->label('Category')
+                            ->required()
+                            ->native(false)
+                            ->hidden(fn ($get) => $get('person_id') == null)
+                            ->relationship('category', 'name'),
+                        Forms\Components\TextInput::make('value_1')
+                            ->label('Value 1')
+                            ->required()
+                            ->hidden(fn ($get) => $get('person_id') == null),
+                    ]),
 
             ]);
     }

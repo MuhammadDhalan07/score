@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DetailValue extends Model
@@ -16,9 +17,15 @@ class DetailValue extends Model
 
     protected $fillable = [
         'category_id',
+        'value_id',
         'value_1',
         'total',
     ];
+
+    public function value(): BelongsTo
+    {
+        return $this->belongsTo(Value::class);
+    }
 
     public function person(): BelongsTo
     {
