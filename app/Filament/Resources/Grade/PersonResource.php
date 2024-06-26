@@ -46,7 +46,7 @@ class PersonResource extends Resource
                     ->email()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
-                    ->tel()
+                    ->tel() 
                     ->maxLength(255),
                 Forms\Components\TextInput::make('address')
                     ->maxLength(255),
