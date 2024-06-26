@@ -15,13 +15,8 @@ class DetailValue extends Model
     protected $table = 'details_value';
 
     protected $fillable = [
-        'name',
-        'person_id',
         'category_id',
         'value_1',
-        'value_2',
-        'value_3',
-        'value_4',
         'total',
     ];
 

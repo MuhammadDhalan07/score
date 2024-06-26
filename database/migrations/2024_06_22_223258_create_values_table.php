@@ -11,19 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('details_value', function (Blueprint $table) {
+        Schema::create('value', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('name')->nullable();
             $table->foreignUlid('person_id')->nullable();
-            $table->foreignUlid('category_id')->nullable();
-            $table->double('value_1')->nullable();
-            $table->double('value_2')->nullable();
-            $table->double('value_3')->nullable();
-            $table->double('value_4')->nullable();
-            $table->double('total')->storedAs('value_1 + value_2 + value_3 + value_4 / 4 * 100')->nullable();
+            $table->foreignUlid('details_value_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create('details_value', function (Blueprint $table) {
+            $table->ulid('id')->primary();
+            $table->foreignUlid('category_id')->nullable();
+            $table->double('value_1')->nullable();
+            $table->double('total')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });
+        
     }
 
     /**
@@ -32,5 +36,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('value');
+        Schema::dropIfExists('details_value');
     }
 };
