@@ -18,7 +18,13 @@ class Value extends Model
     protected $fillable = [
         'details_value_id',
         'person_id',
+        'category_id',
     ];
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 
     public function detailsValue(): HasMany
     {

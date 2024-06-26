@@ -4,7 +4,8 @@ namespace App\Filament\Resources\Grade;
 
 use App\Filament\Resources\Grade\ValueResource\Pages;
 use App\Filament\Resources\Grade\ValueResource\RelationManagers;
-use App\Models\Grade\DetailValue;
+use App\Models\Grade\Category;
+use App\Models\Grade\Value;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ValueResource extends Resource
 {
-    protected static ?string $model = DetailValue::class;
+    protected static ?string $model = Value::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -48,6 +49,7 @@ class ValueResource extends Resource
                     ->relationship('person', 'name'),
                 TableRepeater::make('detailsValue')
                     ->relationship()
+                    ->hidden(fn ($get) => $get('person_id') == null)
                     ->addActionLabel('Add Value')
                     ->headers([
                         Header::make('category_id')
@@ -62,8 +64,7 @@ class ValueResource extends Resource
                             ->label('Category')
                             ->required()
                             ->native(false)
-                            ->hidden(fn ($get) => $get('person_id') == null)
-                            ->relationship('category', 'name'),
+                            ->optins(Category::query()->ca),
                         Forms\Components\TextInput::make('value_1')
                             ->label('Value 1')
                             ->required()
