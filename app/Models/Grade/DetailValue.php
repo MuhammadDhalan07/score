@@ -29,12 +29,12 @@ class DetailValue extends Model
 
     public function person(): BelongsTo
     {
-        return $this->belongsTo(Person::class, 'person_id');
+        return $this->belongsTo(Athlete::class, 'person_id');
     }
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Criteria::class, 'category_id');
     }
 
 }
