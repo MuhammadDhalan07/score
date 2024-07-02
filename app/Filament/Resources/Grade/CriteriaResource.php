@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\Grade;
 
-use App\Filament\Resources\Grade\CategoryResource\Pages;
-use App\Filament\Resources\Grade\CategoryResource\RelationManagers;
-use App\Models\Grade\Category;
+use App\Filament\Resources\Grade\CriteriaResource\Pages;
+use App\Filament\Resources\Grade\CriteriaResource\RelationManagers;
+use App\Models\Grade\Criteria;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,35 +13,48 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CategoryResource extends Resource
+class CriteriaResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Criteria::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-table-cells';
 
-    protected static ?string $label = 'Category';
+    protected static ?string $label = 'Criteria';
 
     protected static ?string $navigationGroup = 'Grade';
 
-    protected static ?string $navigationLabel = 'Category';
+    protected static ?string $navigationLabel = 'Criteria';
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $pluralLabel = 'Category';
+    protected static ?string $pluralLabel = 'Criteria';
 
-    protected static ?string $pluralModelLabel = 'Category';
+    protected static ?string $pluralModelLabel = 'Criteria';
 
-    protected static ?string $slug = 'grade/category';
+    protected static ?string $slug = 'grade/criteria';
 
     public static function form(Form $form): Form
     {
+
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('criteria_name')
                     ->maxLength(255)
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\Select::make('priority')
+                    ->option([
+                        1 => 1,
+                        2 => 2,
+                        3 => 3,
+                        4 => 4,
+                        5 => 5,
+                    ])
                     ->maxLength(255),
+                Forms\Components\Select::make('quality')
+                        ->label('Quality')
+                        ->options([
+                            'Kualitas Baik' => 'Kualitas Baik',
+                        ])
             ]);
     }
 
@@ -79,7 +92,7 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageCategories::route('/'),
+            'index' => Pages\ManageCriterias::route('/'),
         ];
     }
 }

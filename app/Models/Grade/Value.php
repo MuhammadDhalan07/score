@@ -23,7 +23,7 @@ class Value extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Criteria::class);
     }
 
     public function detailsValue(): HasMany
@@ -33,6 +33,6 @@ class Value extends Model
 
     public function person(): BelongsTo
     {
-        return $this->belongsTo(Person::class, 'person_id');
+        return $this->belongsTo(Athlete::class, 'person_id');
     }
 }

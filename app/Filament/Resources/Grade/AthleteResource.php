@@ -17,21 +17,52 @@ class AthleteResource extends Resource
 {
     protected static ?string $model = Athlete::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    protected static ?string $label = 'Athlete';
+
+    protected static ?string $navigationGroup = 'Grade';
+
+    protected static ?string $navigationLabel = 'Athlete';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $pluralLabel = 'Athlete';
+
+    protected static ?string $pluralModelLabel = 'Athlete';
+
+    protected static ?string $slug = 'grade/athlete';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('athlete_name')
+                    ->label('Athlete Name')
+                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('athlete_code')
+                    ->label('Athlete Code')
+                    ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('date_of_entry'),
-                Forms\Components\DatePicker::make('date_of_birth'),
+                Forms\Components\DatePicker::make('date_of_entry')
+                    ->label('Date of Entry')
+                    ->required()
+                    ->native(false)
+                    ,
+                Forms\Components\DatePicker::make('date_of_birth')
+                    ->label('Date of Birth')
+                    ->required()
+                    ->native(false)
+                    ,
                 Forms\Components\TextInput::make('long_time')
+                    ->label('Long Time')
+                    ->numeric()
+                    ->suffix('years')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('cabor')
+                    ->label('Cabor')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
@@ -88,7 +119,9 @@ class AthleteResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

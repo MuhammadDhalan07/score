@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('value', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('person_id')->nullable();
+            $table->foreignUlid('category_id')->nullable();
             $table->foreignUlid('details_value_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
