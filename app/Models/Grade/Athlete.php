@@ -7,17 +7,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Athlete extends Model
 {
     use HasFactory, HasUlids, SoftDeletes;
 
-    protected $table = 'category';
+    protected $table = 'athlete';
 
     protected $fillable = [
-        'name',
-        'description',
-        'person_id',
+        'athlete_name',
+        'athlete_code',
+        'date_of_entry',
+        'date_of_birth',
+        'long_time',
+        'cabor',
+        'email',
+        'phone',
     ];
-
-    
 }

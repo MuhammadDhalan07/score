@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('person', function (Blueprint $table) {
+        Schema::create('criteria', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('name')->nullable();
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('address')->nullable();
-            $table->string('nip')->nullable();
+            $table->string('criteria_name')->nullable();
+            $table->string('priority')->nullable();
+            $table->string('quality')->nullable();
+            $table->foreignUlid('atlet_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('person');
+        Schema::dropIfExists('categories');
     }
 };

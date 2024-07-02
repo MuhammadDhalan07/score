@@ -7,17 +7,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Person extends Model
+class Criteria extends Model
 {
     use HasFactory, HasUlids, SoftDeletes;
 
-    protected $table = 'person';
+    protected $table = 'criteria';
 
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'address',
-        'nip',
+        'criteria_name',
+        'priority',
+        'quality',
+        'athlete_id',
     ];
+
+    
 }

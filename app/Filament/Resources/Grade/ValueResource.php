@@ -4,7 +4,7 @@ namespace App\Filament\Resources\Grade;
 
 use App\Filament\Resources\Grade\ValueResource\Pages;
 use App\Filament\Resources\Grade\ValueResource\RelationManagers;
-use App\Models\Grade\Category;
+use App\Models\Grade\Criteria;
 use App\Models\Grade\Value;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
@@ -64,11 +64,10 @@ class ValueResource extends Resource
                             ->label('Category')
                             ->required()
                             ->native(false)
-                            ->optins(Category::query()->ca),
+                            ->options(Criteria::query()->pluck('name', 'id')),
                         Forms\Components\TextInput::make('value_1')
                             ->label('Value 1')
-                            ->required()
-                            ->hidden(fn ($get) => $get('person_id') == null),
+                            ->required(),
                     ]),
 
             ]);
