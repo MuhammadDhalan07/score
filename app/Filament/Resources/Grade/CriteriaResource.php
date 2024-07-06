@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources\Grade;
 
+use App\Enums\Criteria\Priority;
 use App\Filament\Resources\Grade\CriteriaResource\Pages;
 use App\Filament\Resources\Grade\CriteriaResource\RelationManagers;
 use App\Models\Grade\Criteria;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 
 class CriteriaResource extends Resource
 {
@@ -33,28 +37,42 @@ class CriteriaResource extends Resource
 
     protected static ?string $slug = 'grade/criteria';
 
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery()
+                    ->orderBy('sort_hirarki');
+        
+                    return $query;
+    }
+
     public static function form(Form $form): Form
     {
 
         return $form
             ->schema([
-                Forms\Components\TextInput::make('criteria_name')
-                    ->maxLength(255)
-                    ->required(),
+                Forms\Components\Select::make('parent_id')
+                    ->relationship('parent, criteria_name',
+                    fn (Builder $query, ?Model $record) => $query->whereNull('parent_id')->when($record, fn ($q) => $q->where('id', '<>', $record->id))->orderBy('sort'))
+                    ->columnSpanFull()
+                    ->inlineLabel()
+                    ->native(false)
+                    ->reactive(),
                 Forms\Components\Select::make('priority')
-                    ->option([
-                        1 => 1,
-                        2 => 2,
-                        3 => 3,
-                        4 => 4,
-                        5 => 5,
-                    ])
-                    ->maxLength(255),
-                Forms\Components\Select::make('quality')
-                        ->label('Quality')
-                        ->options([
-                            'Kualitas Baik' => 'Kualitas Baik',
-                        ])
+                    ->options(Priority::class),
+                Forms\Components\TextInput::make('quality')
+                    ->label(fn (Get $get) => ($get('parent_id') ? 'Sub ' : ''). 'Criteria')
+                    ->required()
+                    ->inlineLabel()
+                    ->columnSpanFull(),
+                Forms\Components\Select::make('priority')
+                    ->label('Priority')
+                    ->required()
+                    ->options(Priority::class)
+                    ->inlineLabel()
+                    ->columnSpanFull(),
+    
+    
             ]);
     }
 
@@ -62,18 +80,30 @@ class CriteriaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('criteria_name')
+                ->label('Criteria')
+                ->formatStateUsing(function (?string $state, Model $record) {
+
+                    if ($record->isParent()) {
+                        $prefix = null;
+                    } else {
+                        $prefix = <<<'HTML'
+                            <div class="font-medium">├─</div>
+                        HTML;
+                    }
+
+                    return new HtmlString(<<<HTML
+                        <div class="flex space-x-1">
+                            {$prefix}
+                            <div>$state</div>
+                        </div>
+                    HTML);
+                })
+                ->searchable('criteria'),
+            Tables\Columns\TextColumn::make('priority')
+                ->label('Priority')
+                ->searchable(),
+
             ])
             ->filters([
                 //
@@ -86,7 +116,9 @@ class CriteriaResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->reorderable('sort')
+            ->defaultSort('sort_hirarki');
     }
 
     public static function getPages(): array
