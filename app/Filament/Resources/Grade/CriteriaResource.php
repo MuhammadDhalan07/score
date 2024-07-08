@@ -52,27 +52,24 @@ class CriteriaResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('parent_id')
-                    ->relationship('parent, criteria_name',
+                    ->relationship('parent', 'criteria_name', 
                     fn (Builder $query, ?Model $record) => $query->whereNull('parent_id')->when($record, fn ($q) => $q->where('id', '<>', $record->id))->orderBy('sort'))
                     ->columnSpanFull()
                     ->inlineLabel()
                     ->native(false)
                     ->reactive(),
-                Forms\Components\Select::make('priority')
-                    ->options(Priority::class),
-                Forms\Components\TextInput::make('quality')
+                Forms\Components\TextInput::make('criteria_name')
                     ->label(fn (Get $get) => ($get('parent_id') ? 'Sub ' : ''). 'Criteria')
                     ->required()
                     ->inlineLabel()
                     ->columnSpanFull(),
                 Forms\Components\Select::make('priority')
-                    ->label('Priority')
-                    ->required()
+                    // ->visible(fn ($get) => $get('parent_id') !== null)
                     ->options(Priority::class)
+                    ->required()
                     ->inlineLabel()
                     ->columnSpanFull(),
-    
-    
+
             ]);
     }
 
@@ -88,7 +85,7 @@ class CriteriaResource extends Resource
                         $prefix = null;
                     } else {
                         $prefix = <<<'HTML'
-                            <div class="font-medium">├─</div>
+                            <div class="font-medium"> -----></div>
                         HTML;
                     }
 

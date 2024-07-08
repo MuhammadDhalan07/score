@@ -20,26 +20,23 @@ class CriteriaSeeder extends Seeder
         Criteria::truncate($confirmed);
 
         Criteria::firstOrCreate([
-            'criteria_name' => 'Mutu',
-            'priority' => 1,
+            'criteria_name' => 'Kehadiran Dalam Latihan',
+            'priority' => 1
         ]);
 
         Criteria::firstOrCreate([
-            'criteria_name' => 'Harga',
-            'priority' => 2,
-
+            'criteria_name' => 'Kemampuan Menguasai Koreo Dance',
+            'priority' => 2
         ]);
 
         Criteria::firstOrCreate([
-            'criteria_name' => 'Jumlah Penyakit Yang Dapat Di Basmi',
-            'priority' => 3,
-
+            'criteria_name' => 'Pengalaman Mengikuti Lomba',
+            'priority' => 3
         ]);
 
         Criteria::firstOrCreate([
-            'criteria_name' => 'Dosis Pestisida',
-            'priority' => 4,
-
+            'criteria_name' => 'Lama Menjadi Atlet',
+            'priority' => 4
         ]);
 
     }

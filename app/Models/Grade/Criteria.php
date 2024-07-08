@@ -45,7 +45,7 @@ class Criteria extends Model implements Sortable
             ]);
     }
 
-    public function scopeIndukOnly(Builder $query)
+    public function scopeParentOnly(Builder $query)
     {
         $query->whereNull('parent_id');
     }
