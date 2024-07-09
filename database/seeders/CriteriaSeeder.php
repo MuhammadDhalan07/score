@@ -39,5 +39,87 @@ class CriteriaSeeder extends Seeder
             'priority' => 4
         ]);
 
+
+        // sub()( Criteria
+        $kehadiranDalamLatihan = Criteria::where('criteria_name', 'Kehadiran Dalam Latihan')->first();
+        $kehadiranDalamLatihan->sub()->createMany([
+            [
+                'criteria_name' => 'Sangat Baik',
+                'priority' => 1
+            ],
+            [
+                'criteria_name' => 'Baik',
+                'priority' => 2
+            ],
+            [
+                'criteria_name' => 'Cukup',
+                'priority' => 3
+            ],
+            [
+                'criteria_name' => 'Kurang',
+                'priority' => 4
+            ],
+        ]);
+
+        $menguasaiKoreo = Criteria::where('criteria_name', 'Kemampuan Menguasai Koreo Dance')->first();
+        $menguasaiKoreo->sub()->createMany([
+            [
+                'criteria_name' => 'Sangat Baik',
+                'priority' => 1
+            ],
+            [
+                'criteria_name' => 'Baik',
+                'priority' => 2
+            ],
+            [
+                'criteria_name' => 'Cukup',
+                'priority' => 3
+            ],
+            [
+                'criteria_name' => 'Kurang',
+                'priority' => 4
+            ],
+        ]);
+
+        $pengalamanLomba = Criteria::where('criteria_name', 'Pengalaman Mengikuti Lomba')->first();
+        $pengalamanLomba->sub()->createMany([
+            [
+                'criteria_name' => 'Sangat Baik',
+                'priority' => 1
+            ],
+            [
+                'criteria_name' => 'Baik',
+                'priority' => 2
+            ],
+            [
+                'criteria_name' => 'Cukup',
+                'priority' => 3
+            ],
+            [
+                'criteria_name' => 'Kurang',
+                'priority' => 4
+            ],
+        ]);
+
+        $lamaMenjadiAtlet = Criteria::where('criteria_name', 'Lama Menjadi Atlet')->first();
+        $lamaMenjadiAtlet->sub()->createMany([
+            [
+                'criteria_name' => 'Sangat Baik',
+                'priority' => 1
+            ],
+            [
+                'criteria_name' => 'Baik',
+                'priority' => 2
+            ],
+            [
+                'criteria_name' => 'Cukup',
+                'priority' => 3
+            ],
+            [
+                'criteria_name' => 'Kurang',
+                'priority' => 4
+            ],
+        ]);
+
     }
 }

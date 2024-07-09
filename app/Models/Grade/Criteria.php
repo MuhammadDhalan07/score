@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EloquentSortable\SortableTrait;
 
 class Criteria extends Model implements Sortable
@@ -25,9 +26,15 @@ class Criteria extends Model implements Sortable
         'parent_id',
     ];
 
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    public function sub(): HasMany
+    {
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     public function isParent(): bool
