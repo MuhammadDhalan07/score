@@ -21,8 +21,6 @@ class Criteria extends Model implements Sortable
     protected $fillable = [
         'criteria_name',
         'priority',
-        'quality',
-        'athlete_id',
         'sort',
         'parent_id',
     ];
