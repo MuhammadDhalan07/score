@@ -16,9 +16,9 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->string('criteria_name')->nullable();
             $table->string('priority')->nullable();
-            $table->string('quality')->nullable();
-            $table->foreignUlid('atlet_id')->nullable();
             $table->foreignUlid('parent_id')->nullable()->index();
+            // $table->string('quality')->nullable();
+            // $table->foreignUlid('atlet_id')->nullable();
 
             $table->bigInteger('sort')->nullable()->index();
             $table->string('sort_hirarki')->nullable()->index();

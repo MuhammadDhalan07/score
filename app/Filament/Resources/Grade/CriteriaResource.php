@@ -66,10 +66,15 @@ class CriteriaResource extends Resource
                 Forms\Components\Select::make('priority')
                     // ->visible(fn ($get) => $get('parent_id') !== null)
                     ->options(Priority::class)
+                    ->afterStateUpdated(fn (Get $get) => $get('parent_id') !== null ? $get('priority') + 1 : $get('priority'))
                     ->required()
                     ->inlineLabel()
+                    ->native(false)
                     ->columnSpanFull(),
-
+                // Forms\Components\TextInput::make('sum')
+                    // ->label('Sum')
+                    // ->readOnly()
+                    // ->columns(2)
             ]);
     }
 
@@ -85,7 +90,7 @@ class CriteriaResource extends Resource
                         $prefix = null;
                     } else {
                         $prefix = <<<'HTML'
-                            <div class="font-medium"> -----></div>
+                            <div class="font-medium"> ---></div>
                         HTML;
                     }
 
@@ -103,11 +108,13 @@ class CriteriaResource extends Resource
 
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

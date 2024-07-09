@@ -88,16 +88,16 @@ class AthleteResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('athlete_code')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('cabor')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('long_time')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('date_of_entry')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('long_time')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('cabor')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
@@ -116,7 +116,7 @@ class AthleteResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
