@@ -14,22 +14,12 @@ return new class extends Migration
         Schema::create('value', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('person_id')->nullable();
-            $table->foreignUlid('category_id')->nullable();
-            $table->foreignUlid('details_value_id')->nullable();
+            $table->foreignUlid('criteria_id')->nullable();
+            $table->double('real_value')->nullable();
+            $table->double('rank')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::create('details_value', function (Blueprint $table) {
-            $table->ulid('id')->primary();
-            $table->foreignUlid('category_id')->nullable();
-            $table->foreignUlid('value_id')->index()->references('id')->on('value');
-            $table->double('value_1')->nullable();
-            $table->double('total')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-        });
-        
     }
 
     /**
@@ -38,6 +28,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('value');
-        Schema::dropIfExists('details_value');
     }
 };

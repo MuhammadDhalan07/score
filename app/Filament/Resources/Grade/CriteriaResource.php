@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 
 class CriteriaResource extends Resource
@@ -101,11 +102,12 @@ class CriteriaResource extends Resource
                         </div>
                     HTML);
                 })
-                ->searchable('criteria'),
+                ->searchable(),
             Tables\Columns\TextColumn::make('priority')
                 ->label('Priority')
                 ->searchable(),
-
+            Tables\Columns\TextColumn::make('bobot')
+                ->label('Bobot')
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -114,12 +116,20 @@ class CriteriaResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\RestoreAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                    
                 ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->groupedBulkActions([
+                Tables\Actions\BulkAction::make('forceDelete')
+                    ->requiresConfirmation()
+                    ->action(fn (Collection $records) => $records->each->forceDelete()),
             ])
             ->reorderable('sort')
             ->defaultSort('sort_hirarki');

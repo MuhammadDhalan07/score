@@ -16,9 +16,10 @@ class Value extends Model
     protected $table = 'value';
 
     protected $fillable = [
-        'details_value_id',
+        'real_value',
+        'rank',
         'person_id',
-        'category_id',
+        'criteria_id',
     ];
 
     public function category(): BelongsTo
