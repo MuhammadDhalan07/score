@@ -22,15 +22,14 @@ class Value extends Model
         'criteria_id',
     ];
 
+    protected $casts = [
+        'criteria_id' => 'array',
+    ];
     public function criteria(): BelongsTo
     {
         return $this->belongsTo(Criteria::class, 'criteria_id');
     }
 
-    // public function detailsValue(): HasMany
-    // {
-        // return $this->hasMany(DetailValue::class);
-    // }
 
     public function person(): BelongsTo
     {

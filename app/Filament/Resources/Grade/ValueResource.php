@@ -47,14 +47,13 @@ class ValueResource extends Resource
                     ->native(false)
                     ->columnSpanFull()
                     ->relationship('person', 'athlete_name'),
-                Forms\Components\Select::make('criteria_id')
-                    ->label('Criteria')
-                    ->required()
-                    ->native(false)
-                    ->options(Criteria::query()->pluck('criteria_name', 'id')),
-                Forms\Components\TextInput::make('real_value')
-                    ->label('Nilai Real')
-                    ->required(),
+                // Forms\Components\Select::make('criteria_id')
+                    // ->label('Criteria')
+                    // ->required()
+                    // ->columnSpanFull()
+                    // ->native(false)
+                    // ->options(Criteria::query()->whereNull('parent_id')->pluck('criteria_name', 'id'))
+                    // ->multiple(),
                 
 // 
                 // TableRepeater::make('detailsValue')
@@ -87,14 +86,17 @@ class ValueResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('person.athlete_name')
+                    ->label('Person'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

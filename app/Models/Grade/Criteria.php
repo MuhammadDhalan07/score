@@ -24,6 +24,7 @@ class Criteria extends Model implements Sortable
         'priority',
         'sort',
         'parent_id',
+        'value_id',
         'bobot',
     ];
 
@@ -35,6 +36,10 @@ class Criteria extends Model implements Sortable
         });
     }
 
+    public function value(): BelongsTo
+    {
+        return $this->belongsTo(Value::class, 'value_id');  
+    }
 
     public function parent(): BelongsTo
     {

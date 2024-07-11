@@ -4,7 +4,9 @@ namespace App\Filament\Pages;
 
 use App\Models\Grade\Criteria;
 use App\Models\Grade\Value as GradeValue;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables;
@@ -36,30 +38,50 @@ class Value extends Page implements HasTable
     {
         return $table 
             ->query(GradeValue::query())
-            ->content(fn () => view('filament.pages.value'))
+            ->content(view('filament.pages.tables.value-table'))
             ->filters([
-                Tables\Filters\Filter::make('parent_id')
+                Tables\Filters\SelectFilter::make('parent_id')
+                    ->relationship('person', 'athlete_name')
+                    // ->hiddenLabel()
+                    ->label(false)
+                    ->preload()
+                    ->optionsLimit(1000)
+                    ->searchable()
                     ->columnSpanFull()
-                    ->form([
-                        Select::make('parent_id')
-                        ->relationship('person', 'athlete_name')
-                        ->hiddenLabel()
-                        ->searchable()
-                        ->columnSpanFull()
-                        ->prefix('Athlete')
-                    ])
+                    // ->prefix('Athlete')
+                    ,
+                // Tables\Filters\Filter::make('parent_id')
+                //     ->columnSpanFull()
+                //     ->form([
+                //         Select::make('parent_id')
+                //         ->relationship('person', 'athlete_name')
+                //         ->hiddenLabel()
+                //         ->searchable()
+                //         ->columnSpanFull()
+                //         ->prefix('Athlete')
+                //     ])
             ])
-            ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent);
+            ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent)
+            ;
     }
 
-    public function sumbit()
+    public function save(): Action
     {
-        // $data = $this->form->getState();
-// 
-        // GradeValue::create($data);
-// 
-        // session()->flash('success', 'Data berhasil disimpan.');
-// 
-        // return redirect()->route('filament.pages.value');
+        return Action::make('save')
+            ->label('Save')
+            ->requiresConfirmation()
+            ->icon('heroicon-o-arrow-down-tray')
+            ->tooltip('Save Changes')
+            ->action(function () {
+                $this->validate();
+                
+                Notification::make()
+                ->title('Success')
+                ->body('Changes Saved')
+                ->success()
+                ->color('success')
+                ->send();
+
+            });
     }
 }
