@@ -46,29 +46,39 @@ class ValueResource extends Resource
                     ->live()
                     ->native(false)
                     ->columnSpanFull()
-                    ->relationship('person', 'name'),
-                TableRepeater::make('detailsValue')
-                    ->relationship()
-                    ->hidden(fn ($get) => $get('person_id') == null)
-                    ->addActionLabel('Add Value')
-                    ->headers([
-                        Header::make('category_id')
-                            ->label('Category')
-                            ->markAsRequired(),
-                        Header::make('value')
-                            ->label('Value')
-                            ->markAsRequired(),
-                    ])
-                    ->schema([
-                        Forms\Components\Select::make('category_id')
-                            ->label('Category')
-                            ->required()
-                            ->native(false)
-                            ->options(Criteria::query()->pluck('name', 'id')),
-                        Forms\Components\TextInput::make('value_1')
-                            ->label('Value 1')
-                            ->required(),
-                    ]),
+                    ->relationship('person', 'athlete_name'),
+                Forms\Components\Select::make('criteria_id')
+                    ->label('Criteria')
+                    ->required()
+                    ->native(false)
+                    ->options(Criteria::query()->pluck('criteria_name', 'id')),
+                Forms\Components\TextInput::make('real_value')
+                    ->label('Nilai Real')
+                    ->required(),
+                
+// 
+                // TableRepeater::make('detailsValue')
+                //     ->relationship()
+                //     ->hidden(fn ($get) => $get('person_id') == null)
+                //     ->addActionLabel('Add Value')
+                //     ->headers([
+                //         Header::make('category_id')
+                //             ->label('Category')
+                //             ->markAsRequired(),
+                //         Header::make('value')
+                //             ->label('Value')
+                //             ->markAsRequired(),
+                //     ])
+                //     ->schema([
+                //         Forms\Components\Select::make('category_id')
+                //             ->label('Category')
+                //             ->required()
+                //             ->native(false)
+                //             ->options(Criteria::query()->pluck('name', 'id')),
+                //         Forms\Components\TextInput::make('value_1')
+                //             ->label('Value 1')
+                //             ->required(),
+                //     ]),
 
             ]);
     }

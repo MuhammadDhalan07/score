@@ -22,15 +22,15 @@ class Value extends Model
         'criteria_id',
     ];
 
-    public function category(): BelongsTo
+    public function criteria(): BelongsTo
     {
-        return $this->belongsTo(Criteria::class);
+        return $this->belongsTo(Criteria::class, 'criteria_id');
     }
 
-    public function detailsValue(): HasMany
-    {
-        return $this->hasMany(DetailValue::class);
-    }
+    // public function detailsValue(): HasMany
+    // {
+        // return $this->hasMany(DetailValue::class);
+    // }
 
     public function person(): BelongsTo
     {
