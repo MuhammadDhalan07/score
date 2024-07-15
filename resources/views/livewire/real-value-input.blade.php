@@ -1,8 +1,12 @@
 <div>
     <x-filament::input.wrapper>
-        <x-filament::input
-            type="text"
-            wire:model.lazy="realValue"
-        />
+        
+            <x-filament::input
+                type="text"
+                wire:model.debounce.500ms="realValue"
+                wire:blur="saveRealValue"
+                class="block w-full"
+            />
+        
     </x-filament::input.wrapper>
 </div>

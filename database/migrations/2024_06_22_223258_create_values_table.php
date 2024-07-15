@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('value', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('person_id')->nullable();
-            $table->foreignUlid('criteria_id')->nullable();
+            $table->foreignUlid('criteria_id', 255)->nullable();
             $table->double('real_value')->nullable();
             $table->double('rank')->nullable();
             $table->softDeletes();

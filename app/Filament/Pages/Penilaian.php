@@ -12,6 +12,13 @@ class Penilaian extends Page
 
     protected static string $view = 'filament.pages.penilaian';
 
+    protected static ?string $navigationLabel = 'Rank';
+
+    protected static ?string $title = 'Rank';
+
+
+
+
     public function penilaianAction(): Action
     {
         return Action::make('penilaian')

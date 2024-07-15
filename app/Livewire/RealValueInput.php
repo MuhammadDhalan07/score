@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire;
 
 use App\Models\Grade\Value;
@@ -7,12 +8,14 @@ use Livewire\Component;
 class RealValueInput extends Component
 {
     public $criteriaId;
+    public $personId;
     public $realValue;
 
-    public function mount($criteriaId)
+    public function mount($criteriaId, $personId)
     {
         $this->criteriaId = $criteriaId;
-        $value = Value::where('criteria_id', $criteriaId)->first();
+        $this->personId = $personId;
+        $value = Value::where('criteria_id', $criteriaId)->where('person_id', $personId)->first();
 
         if ($value) {
             $this->realValue = $value->real_value;
@@ -21,9 +24,13 @@ class RealValueInput extends Component
         }
     }
 
-    public function updatedRealValue()
+    public function saveRealValue()
     {
-        $value = Value::firstOrNew(['criteria_id' => $this->criteriaId]);
+        $this->validate([
+            'realValue' => 'numeric',
+        ]);
+
+        $value = Value::firstOrNew(['criteria_id' => $this->criteriaId, 'person_id' => $this->personId]);
         $value->real_value = $this->realValue;
         $value->save();
     }

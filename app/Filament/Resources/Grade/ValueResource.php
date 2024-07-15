@@ -10,6 +10,7 @@ use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -26,13 +27,13 @@ class ValueResource extends Resource
 
     protected static ?string $navigationGroup = 'Grade';
 
-    protected static ?string $navigationLabel = 'Value';
+    protected static ?string $navigationLabel = 'Pull Up Value';
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $pluralLabel = 'Value';
+    protected static ?string $pluralLabel = 'Pull Up Value';
 
-    protected static ?string $pluralModelLabel = 'Value';
+    protected static ?string $pluralModelLabel = 'Pull Up Value';
 
     protected static ?string $slug = 'grade/value';
 
@@ -43,7 +44,6 @@ class ValueResource extends Resource
                 Forms\Components\Select::make('person_id')
                     ->label('Person')
                     ->required()
-                    ->live()
                     ->native(false)
                     ->columnSpanFull()
                     ->relationship('person', 'athlete_name'),

@@ -23,6 +23,8 @@ class Value extends Page implements HasTable
 
     // protected static ?string $slug = 'value';
 
+    public $realValues = [];
+
     public $criteria;
 
     public $value;
@@ -41,13 +43,16 @@ class Value extends Page implements HasTable
             ->content(view('filament.pages.tables.value-table'))
             ->filters([
                 Tables\Filters\SelectFilter::make('parent_id')
-                    ->relationship('person', 'athlete_name')
+                    ->relationship('person', 'athlete_name', fn($query) => $query->has('value'))
                     // ->hiddenLabel()
-                    ->label(false)
+                    ->label('Athlete')
                     ->preload()
-                    ->optionsLimit(1000)
-                    ->searchable()
                     ->columnSpanFull()
+                    ->native(false)
+                    ->default(fn (): ?string => request('parent_id'))
+                    ->selectablePlaceholder(false)
+                    // ->optionsLimit(1000)
+                    // ->searchable()
                     // ->prefix('Athlete')
                     ,
                 // Tables\Filters\Filter::make('parent_id')
