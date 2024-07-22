@@ -2,25 +2,34 @@
 
 namespace App\Livewire;
 
+use App\Models\Grade\Athlete;
 use App\Models\Grade\Value;
 use Livewire\Component;
 
 class RealValueInput extends Component
 {
     public $criteriaId;
-    public $personId;
     public $realValue;
+    public $personId;
 
     public function mount($criteriaId, $personId)
     {
         $this->criteriaId = $criteriaId;
         $this->personId = $personId;
-        $value = Value::where('criteria_id', $criteriaId)->where('person_id', $personId)->first();
+        // $this->personId = Athlete::find($personId)->id;
+        $values = Value::where('person_id', $this->personId)->where('criteria_id', $this->criteriaId)->get();
+        // dd();
+        
+        $this->realValue = [];
 
-        if ($value) {
-            $this->realValue = $value->real_value;
-        } else {
-            $this->realValue = '';
+        // if ($value) {
+            // $this->realValue[$value->id] = $value->real_value;
+        // } else {
+            // $this->realValue = null;
+        // }
+
+        foreach ($values as $value) {
+            $this->realValue[$value->id] = $value->real_value;
         }
     }
 
@@ -30,7 +39,9 @@ class RealValueInput extends Component
             'realValue' => 'numeric',
         ]);
 
-        $value = Value::firstOrNew(['criteria_id' => $this->criteriaId, 'person_id' => $this->personId]);
+        $value = Value::firstOrNew(
+            ['criteria_id' => $this->criteriaId, 'person_id' => $this->personId]
+        );
         $value->real_value = $this->realValue;
         $value->save();
     }

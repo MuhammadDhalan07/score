@@ -46,7 +46,10 @@ class ValueResource extends Resource
                     ->required()
                     ->native(false)
                     ->columnSpanFull()
-                    ->relationship('person', 'athlete_name'),
+                    ->relationship('person', 'athlete_name', function ($query) {
+                        $selectedPersonIds = Value::pluck('person_id')->toArray();
+                        $query->whereNotIn('id', $selectedPersonIds);
+                    }),
                 // Forms\Components\Select::make('criteria_id')
                     // ->label('Criteria')
                     // ->required()

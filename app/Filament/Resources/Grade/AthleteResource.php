@@ -11,7 +11,9 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 
 class AthleteResource extends Resource
 {
@@ -85,8 +87,13 @@ class AthleteResource extends Resource
                     ])
                     ->alignCenter(),
                 Tables\Columns\TextColumn::make('athlete_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('athlete_code')
+                    ->label('Athlete Name')
+                    ->formatStateUsing(fn (Model $record, ?string $state) => new HtmlString(<<<BLADE
+                        <div>
+                            $state
+                        </div>
+                        <div class="text-sm text-gray-500">{$record->athlete_code}</div>
+                    BLADE))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cabor')
                     ->searchable(),
