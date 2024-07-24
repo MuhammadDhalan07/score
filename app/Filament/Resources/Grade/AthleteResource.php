@@ -88,6 +88,7 @@ class AthleteResource extends Resource
                     ->alignCenter(),
                 Tables\Columns\TextColumn::make('athlete_name')
                     ->label('Athlete Name')
+                    ->wrap()
                     ->formatStateUsing(fn (Model $record, ?string $state) => new HtmlString(<<<BLADE
                         <div>
                             $state
@@ -95,20 +96,25 @@ class AthleteResource extends Resource
                         <div class="text-sm text-gray-500">{$record->athlete_code}</div>
                     BLADE))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('cabor')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('long_time')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('date_of_entry')
                     ->date()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('long_time')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('cabor')
+                    ->searchable()
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('phone')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()
+                    ->wrap()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
