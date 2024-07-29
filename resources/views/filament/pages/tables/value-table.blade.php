@@ -10,7 +10,6 @@
     $athlete = Athlete::find($personId);
 @endphp
 
-
 <div>
     <div>
         <div class="bg-white shadow-sm fi-section rounded-xl ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
@@ -52,8 +51,6 @@
                     <th class="px-3 py-2">No</th>
                     <th class="px-3 py-2">Kriteria</th>
                     <th class="px-3 py-2">Bobot</th>
-                    {{-- <th class="px-3 py-2">Sub Kriteria</th> --}}
-                    {{-- <th class="px-3 py-2">Bobot</th> --}}
                     <th class="px-3 py-2">Nilai Utility</th>
                     <th class="px-3 py-2">Nilai Real</th>
                     <th class="px-3 py-2">Hasil</th>
@@ -63,35 +60,42 @@
             <tbody class="divide-y divide-gray-950/5 dark:divide-white/10">
                 @foreach ($criteriaList as $key => $criteria)
                     <tr class="divide-x divide-gray-950/5 dark:divide-white/10">
-                        <td class="px-3 py-2"> {{ $key + 1 }}</td>
+                        <td class="px-3 py-2">{{ $key + 1 }}</td>
                         <td class="px-3 py-2">{{ $criteria->criteria_name }}</td>
                         <td class="px-3 py-2">{{ $criteria->bobot }}</td>
-
+                        
                         @php
                             $subCriteria = $subCriteriaList[$criteria->id] ?? collect();
                         @endphp    
 
-
                         @foreach ($subCriteria as $sub)
-                        @php
-                            $utility = round($criteria->bobot * $sub->bobot, 3);
-                            $real = round($utility * $criteria->real_value, 3);
-                        @endphp
+                            @php
+                                $utility = round($criteria->bobot * $sub->bobot, 3);
+                                $real = round($utility * $criteria->real_value, 3);
+                            @endphp
 
-                        <tr class="divide-x divide-gray-950/5 dark:divide-white/10">
-                            <td></td>
-                            <td class="px-3 py-2">{{ $sub->criteria_name }}</td>
-                            <td class="px-3 py-2">{{ $sub->bobot }}</td>
-                            <td class="px-3 py-2">{{ round($criteria->bobot * $sub->bobot, 3) }}</td>
-                            <td class="px-3 py-2 w-32">
-                                <livewire:real-value-input :criteria-id="$sub->id" :person-id="$personId" /> 
-                            </td>
-                            <td class="px-3 py-2">{{ $real }}</td>
-                        </tr>
+                            <tr class="divide-x divide-gray-950/5 dark:divide-white/10">
+                                <td></td>
+                                <td class="px-3 py-2">{{ $sub->criteria_name }}</td>
+                                <td class="px-3 py-2">{{ $sub->bobot }}</td>
+                                <td class="px-3 py-2">{{ round($criteria->bobot * $sub->bobot, 3) }}</td>
+                                <td class="px-3 py-2 w-32">
+                                    <livewire:real-value-input 
+                                        :criteria-id="$sub->id" 
+                                        :person-id="$personId"
+                                        wire:key="real-value-input-{{ $sub->id }}-{{ $personId }}" 
+                                    />
+                                </td>
+                                <td class="px-3 py-2">{{ $real }}</td>
+                            </tr>
                         @endforeach
                     </tr>
                 @endforeach
             </tbody>
+        </table>
+    </div>
+</div>
+
             {{-- <tbody class="divide-y divide-gray-950/5 dark:divide-white/10">
                 @foreach ($criteriaList as $key => $criteria)
                     @php
@@ -133,6 +137,6 @@
                     </tr>
                 @endforeach 
             {{-- </tbody> --}} 
-        </table>
-    </div>
-</div>
+        {{-- </table> --}}
+    {{-- </div> --}}
+{{-- </div> --}}

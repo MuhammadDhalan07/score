@@ -20,6 +20,9 @@ class Value extends Page implements HasTable
     use InteractsWithTable;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    protected static ?string $navigationLabel = 'SMARTER';
+
     protected static string $view = 'filament.pages.value';
 
     public $realValues = [];
