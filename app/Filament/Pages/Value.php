@@ -23,6 +23,8 @@ class Value extends Page implements HasTable
 
     protected static ?string $navigationLabel = 'SMARTER';
 
+    protected static ?string $slug = '/smarter';
+
     protected static string $view = 'filament.pages.value';
 
     public $realValues = [];

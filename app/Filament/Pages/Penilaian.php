@@ -16,7 +16,7 @@ class Penilaian extends Page
 
     protected static ?string $title = 'Rank';
 
-
+    protected static ?string $slug = 'rank';
 
 
     public function penilaianAction(): Action

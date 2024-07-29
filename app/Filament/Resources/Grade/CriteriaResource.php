@@ -36,7 +36,7 @@ class CriteriaResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Criteria';
 
-    protected static ?string $slug = 'grade/criteria';
+    protected static ?string $slug = 'base/criteria';
 
 
     public static function getEloquentQuery(): Builder

@@ -35,7 +35,7 @@ class ValueResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Pull Up Value';
 
-    protected static ?string $slug = 'grade/value';
+    protected static ?string $slug = 'setting/pull-up-value';
 
     public static function form(Form $form): Form
     {

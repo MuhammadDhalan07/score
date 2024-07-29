@@ -19,7 +19,7 @@ class AthleteResource extends Resource
 {
     protected static ?string $model = Athlete::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $label = 'Athlete';
 
@@ -33,7 +33,7 @@ class AthleteResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Athlete';
 
-    protected static ?string $slug = 'grade/athlete';
+    protected static ?string $slug = 'base/athlete';
 
 
     public static function form(Form $form): Form
