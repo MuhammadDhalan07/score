@@ -26,8 +26,11 @@ class Value extends Page implements HasTable
     protected static string $view = 'filament.pages.value';
 
     public $realValues = [];
+
     public $criteria;
+
     public $value;
+
     public $selectedAthlete;
 
     public function mount()
@@ -51,6 +54,8 @@ class Value extends Page implements HasTable
                     ->relationship('person', 'athlete_name', fn($query) => $query->has('value'))
                     ->label('Athlete')
                     ->preload()
+                    ->columnSpanFull()
+                    ->native(false)
                     ->default(fn (): ?string => request('parent_id')),
             ])
             ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent);
