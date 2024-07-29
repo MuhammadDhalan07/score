@@ -36,9 +36,9 @@ class Criteria extends Model implements Sortable
         });
     }
 
-    public function value(): BelongsTo
+    public function value(): HasMany
     {
-        return $this->belongsTo(Value::class);  
+        return $this->hasMany(Value::class, 'criteria_id');
     }
 
     public function parent(): BelongsTo

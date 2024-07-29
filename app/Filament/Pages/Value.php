@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Grade\Athlete;
 use App\Models\Grade\Criteria;
 use App\Models\Grade\Value as GradeValue;
 use Filament\Actions\Action;
@@ -36,16 +37,44 @@ class Value extends Page implements HasTable
 
     public $selectedAthlete;
 
+    public $realValueInput = [];
+    
+    public $manyRealValue = [];
+
     #[On('refresh-tabel')]
     public function refreshTable()
     {
         $this->mount();
     }
 
+    #[On('saveRealValue')]
+    public function saveRealValue()
+    {
+        $input = $this->validate([
+            'realValueInput.*' => 'numeric|string',
+        ]);
+
+        foreach ($input['realValueInput'] ?? [] as $key => $value) {
+            [
+                $criteriaId,
+                $personId,
+            ] = explode('-', $key);
+
+            $value = GradeValue::updateOrCreate(
+                [
+                    'criteria_id' => $criteriaId, 
+                    'person_id' => $personId
+                ],
+                [
+                    'real_value' => $value
+                ]
+            );
+        }
+    }
+
     public function mount()
     {
-        // $this->criteria = Criteria::all();
-        // $this->value = GradeValue::all();
+        
     }
 
     public function updatedSelectedAthlete()
@@ -56,20 +85,26 @@ class Value extends Page implements HasTable
     public function table(Table $table): Table
     {
         return $table
-            // ->query(fn () => GradeValue::query())
-            ->query(Criteria::query()->with([
-                'value',
-                'sub.value',
-            ])->whereNull('parent_id'))
+            ->query(fn() => 
+                Criteria::query()->with([
+                    'value',
+                    'sub.value.person',
+                    'sub.parent.value.person',
+                ])->whereNull('parent_id')
+            )
             ->content(view('filament.pages.tables.value-table'))
             ->filters([
-                // Tables\Filters\SelectFilter::make('parent_id')
-                //     ->relationship('person', 'athlete_name', fn($query) => $query->has('value'))
-                //     ->label('Athlete')
-                //     ->preload()
-                //     ->columnSpanFull()
-                //     ->native(false)
-                //     ->default(fn (): ?string => request('parent_id')),
+                Tables\Filters\SelectFilter::make('parent_id')
+                    ->options(fn() => Athlete::pluck('athlete_name', 'id'))
+                    ->query(fn($data, $query) => $query->when($data['value'], fn($q, $athleteId) => 
+                        $q->whereHas('value', fn($q) => $q->where('person_id', $athleteId))
+                            ->orWhereHas('sub.value', fn($q) => $q->where('person_id', $athleteId))
+                    ))
+                    ->label('Athlete')
+                    ->preload()
+                    ->columnSpanFull()
+                    ->native(false)
+                    ->default(fn () => null),
             ])
             ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent);
     }
