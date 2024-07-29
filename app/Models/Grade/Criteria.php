@@ -38,7 +38,7 @@ class Criteria extends Model implements Sortable
 
     public function value(): BelongsTo
     {
-        return $this->belongsTo(Value::class, 'value_id');  
+        return $this->belongsTo(Value::class);  
     }
 
     public function parent(): BelongsTo

@@ -1,3 +1,3 @@
 <x-filament-panels::page>
-    {{-- {{ $this->penilaianAction}} --}}
+    {{ $this->table }}
 </x-filament-panels::page>

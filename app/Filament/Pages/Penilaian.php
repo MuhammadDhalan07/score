@@ -3,11 +3,19 @@
 namespace App\Filament\Pages;
 
 use App\Models\Grade\Criteria;
+use App\Models\Grade\Value;
 use Filament\Actions\Action;
 use Filament\Pages\Page;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables;
+use Filament\Tables\Table;
 
-class Penilaian extends Page
+
+class Penilaian extends Page implements HasTable
 {
+    use InteractsWithTable;
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
 
     protected static string $view = 'filament.pages.penilaian';
@@ -19,6 +27,18 @@ class Penilaian extends Page
     protected static ?string $slug = 'rank';
 
 
+    public function table(Table $table): Table
+    {
+        return $table
+            ->query(fn () => Value::query())
+            ->columns([
+                TextColumn::make('person.athlete_name')
+                    ->label('Nama')    
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('real_value')
+            ]);
+    }
     public function penilaianAction(): Action
     {
         return Action::make('penilaian')

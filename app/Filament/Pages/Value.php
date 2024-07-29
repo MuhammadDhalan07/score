@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\FiltersLayout;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Value extends Page implements HasTable
@@ -35,10 +36,16 @@ class Value extends Page implements HasTable
 
     public $selectedAthlete;
 
+    #[On('refresh-tabel')]
+    public function refreshTable()
+    {
+        $this->mount();
+    }
+
     public function mount()
     {
-        $this->criteria = Criteria::all();
-        $this->value = GradeValue::all();
+        // $this->criteria = Criteria::all();
+        // $this->value = GradeValue::all();
     }
 
     public function updatedSelectedAthlete()
@@ -49,16 +56,20 @@ class Value extends Page implements HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(fn () => GradeValue::query())
+            // ->query(fn () => GradeValue::query())
+            ->query(Criteria::query()->with([
+                'value',
+                'sub.value',
+            ])->whereNull('parent_id'))
             ->content(view('filament.pages.tables.value-table'))
             ->filters([
-                Tables\Filters\SelectFilter::make('parent_id')
-                    ->relationship('person', 'athlete_name', fn($query) => $query->has('value'))
-                    ->label('Athlete')
-                    ->preload()
-                    ->columnSpanFull()
-                    ->native(false)
-                    ->default(fn (): ?string => request('parent_id')),
+                // Tables\Filters\SelectFilter::make('parent_id')
+                //     ->relationship('person', 'athlete_name', fn($query) => $query->has('value'))
+                //     ->label('Athlete')
+                //     ->preload()
+                //     ->columnSpanFull()
+                //     ->native(false)
+                //     ->default(fn (): ?string => request('parent_id')),
             ])
             ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent);
     }

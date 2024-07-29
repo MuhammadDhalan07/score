@@ -46,6 +46,7 @@ class RealValueInput extends Component
         );
         $value->real_value = $this->realValue;
         $value->save();
+        $this->dispatch('refresh-tabel');
     }
 
     public function render()
