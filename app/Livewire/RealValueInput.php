@@ -9,7 +9,7 @@ use Livewire\Component;
 class RealValueInput extends Component
 {
     public $criteriaId;
-    public $realValue = [];
+    public $realValue;
     public $personId;
 
     public function mount($criteriaId, $personId)
@@ -26,12 +26,12 @@ class RealValueInput extends Component
 
     public function loadRealValue()
     {
-        $values = Value::where('person_id', $this->personId)
+        $value = Value::where('person_id', $this->personId)
                         ->where('criteria_id', $this->criteriaId)
-                        ->get();
+                        ->first();
 
-        foreach ($values as $value) {
-            $this->realValue[$value->criteria_id] = $value->real_value;
+        if ($value) {
+            $this->realValue = $value->real_value;
         }
     }
 
@@ -41,12 +41,11 @@ class RealValueInput extends Component
             'realValue' => 'numeric',
         ]);
 
-        foreach ($this->realValue as $criteriaId => $realValue) {
-            $value = Value::updateOrCreate(
-                ['criteria_id' => $criteriaId, 'person_id' => $this->personId],
-                ['real_value' => $realValue]
-            );
-        }
+        $value = Value::firstOrNew(
+            ['criteria_id' => $this->criteriaId, 'person_id' => $this->personId]
+        );
+        $value->real_value = $this->realValue;
+        $value->save();
     }
 
     public function render()
@@ -54,6 +53,7 @@ class RealValueInput extends Component
         return view('livewire.real-value-input');
     }
 }
+
 
 
 // <?php 

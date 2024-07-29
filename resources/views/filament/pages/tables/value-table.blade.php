@@ -96,6 +96,7 @@
     </div>
 </div>
 
+
             {{-- <tbody class="divide-y divide-gray-950/5 dark:divide-white/10">
                 @foreach ($criteriaList as $key => $criteria)
                     @php
