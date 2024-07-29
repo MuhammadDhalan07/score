@@ -13,61 +13,44 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\FiltersLayout;
+use Livewire\Component;
 
 class Value extends Page implements HasTable
 {
     use InteractsWithTable;
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static string $view = 'filament.pages.value';
 
-    // protected static ?string $slug = 'value';
-
     public $realValues = [];
-
     public $criteria;
-
     public $value;
+    public $selectedAthlete;
 
-    public function __construct()
+    public function mount()
     {
         $this->criteria = Criteria::all();
         $this->value = GradeValue::all();
     }
 
+    public function updatedSelectedAthlete()
+    {
+        $this->dispatchBrowserEvent('update-table');
+    }
 
     public function table(Table $table): Table
     {
-        return $table 
-            ->query(GradeValue::query())
+        return $table
+            ->query(fn () => GradeValue::query())
             ->content(view('filament.pages.tables.value-table'))
             ->filters([
                 Tables\Filters\SelectFilter::make('parent_id')
                     ->relationship('person', 'athlete_name', fn($query) => $query->has('value'))
-                    // ->hiddenLabel()
                     ->label('Athlete')
                     ->preload()
-                    ->columnSpanFull()
-                    ->native(false)
-                    ->default(fn (): ?string => request('parent_id'))
-                    ->selectablePlaceholder(false)
-                    // ->optionsLimit(1000)
-                    // ->searchable()
-                    // ->prefix('Athlete')
-                    ,
-                // Tables\Filters\Filter::make('parent_id')
-                //     ->columnSpanFull()
-                //     ->form([
-                //         Select::make('parent_id')
-                //         ->relationship('person', 'athlete_name')
-                //         ->hiddenLabel()
-                //         ->searchable()
-                //         ->columnSpanFull()
-                //         ->prefix('Athlete')
-                //     ])
+                    ->default(fn (): ?string => request('parent_id')),
             ])
-            ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent)
-            ;
+            ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent);
     }
 
     public function save(): Action
@@ -86,7 +69,6 @@ class Value extends Page implements HasTable
                 ->success()
                 ->color('success')
                 ->send();
-
             });
     }
 }

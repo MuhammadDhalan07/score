@@ -21,11 +21,11 @@ class ValueResource extends Resource
 {
     protected static ?string $model = Value::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
 
     protected static ?string $label = 'Value';
 
-    protected static ?string $navigationGroup = 'Grade';
+    protected static ?string $navigationGroup = 'Setting';
 
     protected static ?string $navigationLabel = 'Pull Up Value';
 

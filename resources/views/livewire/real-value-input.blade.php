@@ -1,8 +1,7 @@
 <div>
     <x-filament::input.wrapper>
-        
             <x-filament::input
-                type="text"
+                type="number"
                 wire:model.debounce.500ms="realValue"
                 wire:blur="saveRealValue"
                 class="block w-full"

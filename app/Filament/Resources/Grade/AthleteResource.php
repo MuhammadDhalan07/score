@@ -23,7 +23,7 @@ class AthleteResource extends Resource
 
     protected static ?string $label = 'Athlete';
 
-    protected static ?string $navigationGroup = 'Grade';
+    protected static ?string $navigationGroup = 'Base';
 
     protected static ?string $navigationLabel = 'Athlete';
 

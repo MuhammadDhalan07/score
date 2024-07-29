@@ -18,18 +18,11 @@ class RealValueInput extends Component
         $this->personId = $personId;
         // $this->personId = Athlete::find($personId)->id;
         $values = Value::where('person_id', $this->personId)->where('criteria_id', $this->criteriaId)->get();
-        // dd();
-        
-        $this->realValue = [];
 
-        // if ($value) {
-            // $this->realValue[$value->id] = $value->real_value;
-        // } else {
-            // $this->realValue = null;
-        // }
+        $this->realValue;
 
         foreach ($values as $value) {
-            $this->realValue[$value->id] = $value->real_value;
+            $this->realValue = $value->real_value;
         }
     }
 

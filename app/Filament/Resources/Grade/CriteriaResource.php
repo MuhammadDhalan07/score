@@ -26,7 +26,7 @@ class CriteriaResource extends Resource
 
     protected static ?string $label = 'Criteria';
 
-    protected static ?string $navigationGroup = 'Grade';
+    protected static ?string $navigationGroup = 'Base';
 
     protected static ?string $navigationLabel = 'Criteria';
 

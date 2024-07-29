@@ -23,7 +23,7 @@ class Value extends Model
     ];
 
     protected $casts = [
-        'criteria_id' => 'array',
+        // 'criteria_id' => 'array',
     ];
     public function criteria(): BelongsTo
     {
