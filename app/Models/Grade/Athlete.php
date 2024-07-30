@@ -31,6 +31,11 @@ class Athlete extends Model
         return $this->belongsTo(Value::class, 'id', 'person_id');
     }
 
+    public function valueAll(): HasMany
+    {
+        return $this->hasMany(Value::class, 'person_id');
+    }
+
     public function criteria(): HasMany
     {
         return $this->hasMany(Criteria::class, 'person_id', 'id');

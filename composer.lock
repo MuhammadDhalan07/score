@@ -74,16 +74,16 @@
         },
         {
             "name": "awcodes/filament-table-repeater",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/awcodes/filament-table-repeater.git",
-                "reference": "01288f0d8c9323f147a6aac7f1fb6c2c4b8b880b"
+                "reference": "5140e21290a99dea460cec85f1ef015aedbbcf57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/awcodes/filament-table-repeater/zipball/01288f0d8c9323f147a6aac7f1fb6c2c4b8b880b",
-                "reference": "01288f0d8c9323f147a6aac7f1fb6c2c4b8b880b",
+                "url": "https://api.github.com/repos/awcodes/filament-table-repeater/zipball/5140e21290a99dea460cec85f1ef015aedbbcf57",
+                "reference": "5140e21290a99dea460cec85f1ef015aedbbcf57",
                 "shasum": ""
             },
             "require": {
@@ -137,7 +137,7 @@
             ],
             "support": {
                 "issues": "https://github.com/awcodes/filament-table-repeater/issues",
-                "source": "https://github.com/awcodes/filament-table-repeater/tree/v3.0.4"
+                "source": "https://github.com/awcodes/filament-table-repeater/tree/v3.0.5"
             },
             "funding": [
                 {
@@ -145,7 +145,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-13T12:44:06+00:00"
+            "time": "2024-07-18T16:02:26+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",
