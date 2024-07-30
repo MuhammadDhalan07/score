@@ -33,6 +33,6 @@ class Athlete extends Model
 
     public function criteria(): HasMany
     {
-        return $this->hasMany(Criteria::class, 'person_id', 'id');
+        return $this->hasMany(Criteria::class, 'id', 'parent_id');
     }
 }

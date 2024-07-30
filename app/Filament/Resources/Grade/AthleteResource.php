@@ -134,7 +134,14 @@ class AthleteResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),])
+                    Tables\Actions\DeleteAction::make(),]),
+                Tables\Actions\Action::make('selection')
+                    ->tooltip('Selection Athlete')
+                    ->form(function ($record) {
+                        
+                    })
+                    // ->url(fn ($record) => \App\Filament\Pages\Athlete\Selection::getUrl())
+                    ->slideOver()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
