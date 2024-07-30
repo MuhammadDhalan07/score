@@ -62,7 +62,8 @@ class SmarterResource extends Resource
                             $record->valueAll->sum('rank') >= 0 => sprintf('D (%s)', number_format($record->valueAll->sum('rank'), 2)),
                         }
                     )
-                    ->default(0),
+                    ->default(0)
+                    ,
             ])
             ->filters([
                 //
