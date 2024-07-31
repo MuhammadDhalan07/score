@@ -56,10 +56,11 @@ class SmarterResource extends Resource
                     ->label('Rank')
                     ->formatStateUsing(fn(Model $record) => 
                         match (true) {
-                            $record->valueAll->sum('rank') >= 75 => sprintf('A (%s)', number_format($record->valueAll->sum('rank'), 2)),
-                            $record->valueAll->sum('rank') >= 50 => sprintf('B (%s)', number_format($record->valueAll->sum('rank'), 2)),
-                            $record->valueAll->sum('rank') >= 25 => sprintf('C (%s)', number_format($record->valueAll->sum('rank'), 2)),
-                            $record->valueAll->sum('rank') >= 0 => sprintf('D (%s)', number_format($record->valueAll->sum('rank'), 2)),
+                            // $record->valueAll->sum('rank') >= 75 => sprintf('A(%s)', number_format($record->valueAll->sum('rank'), 2)),
+                            $record->valueAll->sum('rank') >= 75 => sprintf('%s', number_format($record->valueAll->sum('rank'), 2)),
+                            $record->valueAll->sum('rank') >= 50 => sprintf('%s', number_format($record->valueAll->sum('rank'), 2)),
+                            $record->valueAll->sum('rank') >= 25 => sprintf('%s', number_format($record->valueAll->sum('rank'), 2)),
+                            $record->valueAll->sum('rank') >= 0 => sprintf('%s', number_format($record->valueAll->sum('rank'), 2)),
                         }
                     )
                     ->default(0)
