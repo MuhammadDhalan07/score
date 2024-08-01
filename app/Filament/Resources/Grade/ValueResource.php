@@ -37,6 +37,8 @@ class ValueResource extends Resource
 
     protected static ?string $slug = 'setting/pull-up-value';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form

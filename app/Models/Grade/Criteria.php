@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\EloquentSortable\SortableTrait;
 
 class Criteria extends Model implements Sortable
@@ -39,6 +40,11 @@ class Criteria extends Model implements Sortable
     public function value(): HasMany
     {
         return $this->hasMany(Value::class, 'criteria_id');
+    }
+
+    public function valueOne(): HasOne
+    {
+        return $this->hasOne(Value::class, 'criteria_id');
     }
 
     public function parent(): BelongsTo

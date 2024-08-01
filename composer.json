@@ -7,9 +7,11 @@
     "require": {
         "php": "^8.2",
         "awcodes/filament-table-repeater": "^3.0",
+        "codeat3/blade-file-icons": "^1.9",
         "filament/filament": "^3.2",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "maatwebsite/excel": "^3.1",
         "spatie/eloquent-sortable": "^4.4"
     },
     "require-dev": {
