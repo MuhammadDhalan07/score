@@ -47,6 +47,8 @@ class Rank implements FromCollection, WithColumnWidths, WithStyles
         foreach ($sortedValues as $data) {
             $athlete = $data['athlete'];
             $totalRank = $data['total_rank'];
+            // Hapus atau komentari dump yang ada
+            // dd($athlete);
 
             $this->collection->push([
                 $no++,
@@ -56,7 +58,7 @@ class Rank implements FromCollection, WithColumnWidths, WithStyles
             ]);
         }
 
-        $this->rowCount = $this->collection->count(); 
+        $this->rowCount = $this->collection->count();
 
         return $this;
     }

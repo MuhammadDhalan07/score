@@ -20,9 +20,15 @@ class ManageSmarters extends ManageRecords
                 ->label('Export')
                 ->icon('fileicon-microsoft-excel')
                 ->action(function () {
-                    $athletes = Value::with('person')->get();
+                    // Ambil data menggunakan logika yang sama dengan di SmartResource
+                    $athletes = Value::with('person')
+                        ->whereHas('person', function ($query) {
+                        })
+                        ->get();
+
                     return app(Rank::class)->setUp($athletes)->download('Laporan.xlsx');
                 })
         ];
     }
 }
+
